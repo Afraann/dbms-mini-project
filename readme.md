@@ -54,8 +54,8 @@ JWT_SECRET=your_jwt_secret
 Navigate to the server directory and start the server:
 
 In your terminal-
-cd server
-npm start
+'''cd server
+npm start'''
 
 ### Start the Client
 In a new terminal, navigate to the client directory and start the React development server:
