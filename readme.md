@@ -24,7 +24,7 @@ Make sure you have the following installed:
 ### 1. Clone the Repository
 Clone the repository to your local machine:
 
-'''bash
+```bash
 git clone https://github.com/Afraann/dbms-mini-project.git
 cd dbms-mini-project
 
