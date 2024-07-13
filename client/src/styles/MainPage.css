@@ -1,43 +1,28 @@
-/* client/src/components/MainPage.css */
-.mainpage-container {
+/* src/components/MainPage.css */
+.items-container {
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.item-link {
+  text-decoration: none;
+  color: inherit;
 }
 
-.header-left .logo {
-  height: 40px;
+.item-box {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
 }
 
-.header-center .search-bar {
-  width: 300px;
-  padding: 8px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+.item-box:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header-right .icon {
-  height: 30px;
-  margin-left: 20px;
-}
-
-.body {
-  flex: 1;
-  padding: 20px;
-}
-
-.footer {
-  background-color: #f8f9fa;
-  padding: 10px 20px;
-  text-align: center;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+.item-box img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
