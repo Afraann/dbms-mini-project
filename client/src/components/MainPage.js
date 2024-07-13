@@ -1,12 +1,16 @@
+// client/src/components/MainPage.js
 import React from 'react';
-import '../styles/MainPage.css';  // Import CSS file
+import '../styles/MainPage.css'; // Import the CSS file for styling
 
-const MainPage = () => {
+function MainPage() {
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className="mainpage-container">
+      <main className="body">
+        <h1>Welcome to the Main Page</h1>
+        {/* Main page content goes here */}
+      </main>
     </div>
   );
-};
+}
 
 export default MainPage;

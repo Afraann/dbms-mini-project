@@ -1,6 +1,43 @@
-/* MainPage.css */
-h1 {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
+/* client/src/components/MainPage.css */
+.mainpage-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-left .logo {
+  height: 40px;
+}
+
+.header-center .search-bar {
+  width: 300px;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.header-right .icon {
+  height: 30px;
+  margin-left: 20px;
+}
+
+.body {
+  flex: 1;
+  padding: 20px;
+}
+
+.footer {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  text-align: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
