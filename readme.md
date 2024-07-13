@@ -1,18 +1,17 @@
 # E-Commerce Website
 
 ## Description
-This is a simple website built using the MERN stack (MongoDB, Express.js, React, and Node.js). The website includes user authentication, a login page, a registration page, and a main page.
+This is a simple website built using the MERN stack (MongoDB, Express.js, React, and Node.js).
 
 ## Latest Release
-In here, I will be giving you all the info on what have been done to the project, and what are the changes incuded in the latest updates, as well as list of all updates.
-
--> v1.0
-    This is the first release. In this version, all that's there is the basic pages, but it is connected to the backend.
+The latest release is v0.2
 
 ## Features
 - User Registration
 - User Login
 - Protected Main Page
+- Account Page
+- Main Page that shows list of items from database
 
 ## Prerequisites
 Make sure you have the following installed:
