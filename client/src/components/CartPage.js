@@ -42,7 +42,7 @@ function CartPage() {
   };
 
   const handleProceedToPay = () => {
-    navigate('/payment');
+    navigate('/order-confirm');
   };
 
   if (!cart) {
@@ -67,7 +67,7 @@ function CartPage() {
             </div>
           ))}
           <h3>Total Price: Rs{totalPrice.toFixed(2)}</h3>
-          <button onClick={handleProceedToPay}>Proceed to Pay</button>
+          <button onClick={handleProceedToPay}>Proceed to Order Confirmation</button>
         </div>
       )}
     </div>

@@ -9,7 +9,7 @@ import AccountPage from './components/AccountPage';
 import CartPage from './components/CartPage';
 import ItemPage from './components/ItemPage';
 import Layout from './components/Layout';
-import PaymentPage from './components/PaymentPage';
+import OrderConfirmPage from './components/OrderConfirmPage'; // Add this line
 
 // A component to conditionally wrap routes with Layout
 function LayoutWrapper({ children }) {
@@ -32,7 +32,7 @@ function App() {
           <Route path="/account" element={<AccountPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/item/:id" element={<ItemPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/order-confirm" element={<OrderConfirmPage />} />
         </Routes>
       </LayoutWrapper>
     </Router>

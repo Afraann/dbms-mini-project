@@ -1,5 +1,3 @@
-// routes/cart.js
-
 const express = require('express');
 const router = express.Router();
 const Cart = require('../models/Cart');
@@ -32,7 +30,7 @@ router.post('/add', auth, async (req, res) => {
       return res.status(201).send(newCart);
     }
   } catch (error) {
-    console.log(error);
+    console.error('Error adding item to cart:', error);
     res.status(500).send('Something went wrong');
   }
 });
@@ -47,7 +45,27 @@ router.get('/', auth, async (req, res) => {
       res.status(404).send('Cart not found');
     }
   } catch (error) {
-    console.log(error);
+    console.error('Error fetching cart:', error);
+    res.status(500).send('Something went wrong');
+  }
+});
+
+// Remove item from cart
+router.post('/remove', auth, async (req, res) => {
+  const { itemId } = req.body;
+
+  try {
+    let cart = await Cart.findOne({ userId: req.user._id });
+    if (!cart) {
+      return res.status(404).send('Cart not found');
+    }
+
+    cart.items = cart.items.filter(item => item.itemId.toString() !== itemId);
+
+    cart = await cart.save();
+    return res.status(200).send(cart);
+  } catch (error) {
+    console.error('Error removing item from cart:', error);
     res.status(500).send('Something went wrong');
   }
 });

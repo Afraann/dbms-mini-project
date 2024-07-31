@@ -8,7 +8,7 @@ function ItemPage() {
   const [item, setItem] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState('');
-  const [showQuantity, setShowQuantity] = useState(false);
+  const [showQuantityInput, setShowQuantityInput] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -26,7 +26,7 @@ function ItemPage() {
   const handleAddToCart = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/cart/add', {
+      const response = await axios.post('http://localhost:5000/api/cart/add', {
         itemId: id,
         quantity,
       }, {
@@ -43,7 +43,7 @@ function ItemPage() {
   const handleRemoveFromCart = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/cart/remove', {
+      const response = await axios.post('http://localhost:5000/api/cart/remove', {
         itemId: id,
       }, {
         headers: {
@@ -66,8 +66,8 @@ function ItemPage() {
       <p>Rs{item.price.toFixed(2)}</p>
       <img src={item.imageUrl} alt={item.name} />
       <p>{item.description}</p>
-      {showQuantity ? (
-        <div>
+      {showQuantityInput ? (
+        <>
           <input
             type="number"
             value={quantity}
@@ -75,9 +75,9 @@ function ItemPage() {
             min="1"
           />
           <button onClick={handleAddToCart}>Add</button>
-        </div>
+        </>
       ) : (
-        <button onClick={() => setShowQuantity(true)}>Add to Cart</button>
+        <button onClick={() => setShowQuantityInput(true)}>Add to Cart</button>
       )}
       <button onClick={handleRemoveFromCart}>Remove from Cart</button>
       {message && <p>{message}</p>}

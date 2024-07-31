@@ -17,7 +17,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/protected', protectedRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/cart', cartRoutes);
-app.use('/api/orders', orderRoutes); // Add this line
+app.use('/api/order', orderRoutes); // Add this line
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
