@@ -8,6 +8,7 @@ function ItemPage() {
   const [item, setItem] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState('');
+  const [showQuantity, setShowQuantity] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -25,7 +26,7 @@ function ItemPage() {
   const handleAddToCart = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/cart/add', {
+      await axios.post('http://localhost:5000/api/cart/add', {
         itemId: id,
         quantity,
       }, {
@@ -42,7 +43,7 @@ function ItemPage() {
   const handleRemoveFromCart = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/cart/remove', {
+      await axios.post('http://localhost:5000/api/cart/remove', {
         itemId: id,
       }, {
         headers: {
@@ -62,16 +63,22 @@ function ItemPage() {
   return (
     <div>
       <h1>{item.name}</h1>
-      <p>${item.price.toFixed(2)}</p>
+      <p>Rs{item.price.toFixed(2)}</p>
       <img src={item.imageUrl} alt={item.name} />
       <p>{item.description}</p>
-      <input
-        type="number"
-        value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
-        min="1"
-      />
-      <button onClick={handleAddToCart}>Add to Cart</button>
+      {showQuantity ? (
+        <div>
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            min="1"
+          />
+          <button onClick={handleAddToCart}>Add</button>
+        </div>
+      ) : (
+        <button onClick={() => setShowQuantity(true)}>Add to Cart</button>
+      )}
       <button onClick={handleRemoveFromCart}>Remove from Cart</button>
       {message && <p>{message}</p>}
     </div>

@@ -46,27 +46,27 @@ function CartPage() {
   };
 
   if (!cart) {
-    return <div>Loading...</div>;
+    return <div>Your cart is empty</div>;
   }
 
-  const totalPrice = cart.items.reduce((sum, item) => sum + item.item.price * item.quantity, 0);
+  const totalPrice = cart.items.reduce((sum, item) => sum + item.itemId.price * item.quantity, 0);
 
   return (
     <div>
       <h1>Cart Page</h1>
       {cart.items.length === 0 ? (
-        <p>Your cart is empty</p>
+        <p>Your cart is empty!</p>
       ) : (
         <div>
-          {cart.items.map(({ item, quantity }) => (
-            <div key={item._id}>
-              <h2>{item.name}</h2>
-              <p>Price: ${item.price.toFixed(2)}</p>
+          {cart.items.map(({ itemId, quantity }) => (
+            <div key={itemId._id}>
+              <h2>{itemId.name}</h2>
+              <p>Price: Rs{itemId.price.toFixed(2)}</p>
               <p>Quantity: {quantity}</p>
-              <button onClick={() => handleRemoveFromCart(item._id)}>Remove from Cart</button>
+              <button onClick={() => handleRemoveFromCart(itemId._id)}>Remove from Cart</button>
             </div>
           ))}
-          <h3>Total Price: ${totalPrice.toFixed(2)}</h3>
+          <h3>Total Price: Rs{totalPrice.toFixed(2)}</h3>
           <button onClick={handleProceedToPay}>Proceed to Pay</button>
         </div>
       )}

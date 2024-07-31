@@ -1,57 +1,54 @@
-// server/routes/cart.js
+// routes/cart.js
+
 const express = require('express');
 const router = express.Router();
 const Cart = require('../models/Cart');
-const { authenticateToken } = require('../middleware/auth');
-
-// Get cart for a user
-router.get('/', authenticateToken, async (req, res) => {
-  try {
-    const cart = await Cart.findOne({ user: req.user.id }).populate('items.item');
-    res.json(cart || { user: req.user.id, items: [] });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch cart' });
-  }
-});
+const auth = require('../middleware/auth');
 
 // Add item to cart
-router.post('/add', authenticateToken, async (req, res) => {
+router.post('/add', auth, async (req, res) => {
+  const { itemId, quantity } = req.body;
+
   try {
-    const { itemId, quantity } = req.body;
-    let cart = await Cart.findOne({ user: req.user.id });
+    let cart = await Cart.findOne({ userId: req.user._id });
+    if (cart) {
+      const itemIndex = cart.items.findIndex(p => p.itemId == itemId);
 
-    if (!cart) {
-      cart = new Cart({ user: req.user.id, items: [] });
-    }
-
-    const itemIndex = cart.items.findIndex(i => i.item.toString() === itemId);
-    if (itemIndex > -1) {
-      cart.items[itemIndex].quantity += quantity;
+      if (itemIndex > -1) {
+        let productItem = cart.items[itemIndex];
+        productItem.quantity += quantity;
+        cart.items[itemIndex] = productItem;
+      } else {
+        cart.items.push({ itemId, quantity });
+      }
+      cart = await cart.save();
+      return res.status(201).send(cart);
     } else {
-      cart.items.push({ item: itemId, quantity });
-    }
+      const newCart = await Cart.create({
+        userId: req.user._id,
+        items: [{ itemId, quantity }]
+      });
 
-    await cart.save();
-    res.json(cart);
+      return res.status(201).send(newCart);
+    }
   } catch (error) {
-    res.status(500).json({ error: 'Failed to add item to cart' });
+    console.log(error);
+    res.status(500).send('Something went wrong');
   }
 });
 
-// Remove item from cart
-router.post('/remove', authenticateToken, async (req, res) => {
+// Get cart items for user
+router.get('/', auth, async (req, res) => {
   try {
-    const { itemId } = req.body;
-    let cart = await Cart.findOne({ user: req.user.id });
-
-    if (!cart) return res.status(404).json({ error: 'Cart not found' });
-
-    cart.items = cart.items.filter(i => i.item.toString() !== itemId);
-
-    await cart.save();
-    res.json(cart);
+    const cart = await Cart.findOne({ userId: req.user._id }).populate('items.itemId');
+    if (cart) {
+      res.status(200).send(cart);
+    } else {
+      res.status(404).send('Cart not found');
+    }
   } catch (error) {
-    res.status(500).json({ error: 'Failed to remove item from cart' });
+    console.log(error);
+    res.status(500).send('Something went wrong');
   }
 });
 

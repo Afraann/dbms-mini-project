@@ -28,7 +28,7 @@ function MainPage() {
           <Link key={item._id} to={`/item/${item._id}`} className="item-link">
             <div className="item-box">
               <h2>{item.name}</h2>
-              <p>${item.price.toFixed(2)}</p>
+              <p>Rs{item.price.toFixed(2)}</p>
               <img src={item.imageUrl} alt={item.name} />
             </div>
           </Link>
