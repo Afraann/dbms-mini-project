@@ -37,6 +37,10 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isCanceled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Order = mongoose.model('Order', orderSchema);

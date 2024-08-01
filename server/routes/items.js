@@ -24,4 +24,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/count', async (req, res) => {
+  try {
+    const itemCount = await Item.countDocuments();
+    res.json({ count: itemCount });
+  } catch (error) {
+    console.error('Error fetching item count:', error);
+    res.status(500).send('Something went wrong');
+  }
+});
+
 module.exports = router;

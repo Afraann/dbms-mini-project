@@ -24,25 +24,33 @@ function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Login</button>
-    </form>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-brown-700">
+      <form onSubmit={handleSubmit} className="flex flex-col w-90 p-4 border border-beige-300 rounded-md"> {/* Green border for the div */}
+        <h2 className="mx-auto text-2xl font-bold mb-4 text-beige-300">Login</h2>
+        <div className="flex flex-col w-full">
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="h-10 w-full rounded-md border border-gray-300 p-2 mb-4 focus:outline-none focus:border-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="h-10 w-full rounded-md border border-gray-300 p-2 mb-4 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <button type="submit" className="bg-beige-300 text-brown-700 font-bold py-2 px-4 rounded-md">
+          Login
+        </button>
+      </form>
+    </div>
   );
 }
 
-export default LoginPage;
+export default LoginPage

@@ -26,7 +26,7 @@ function ItemPage() {
   const handleAddToCart = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/cart/add', {
+      await axios.post('http://localhost:5000/api/cart/add', {
         itemId: id,
         quantity,
       }, {
@@ -43,7 +43,7 @@ function ItemPage() {
   const handleRemoveFromCart = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/cart/remove', {
+      await axios.post('http://localhost:5000/api/cart/remove', {
         itemId: id,
       }, {
         headers: {
@@ -57,30 +57,43 @@ function ItemPage() {
   };
 
   if (!item) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-gray-700">Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>{item.name}</h1>
-      <p>Rs{item.price.toFixed(2)}</p>
-      <img src={item.imageUrl} alt={item.name} />
-      <p>{item.description}</p>
-      {showQuantityInput ? (
-        <>
-          <input
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            min="1"
-          />
-          <button onClick={handleAddToCart}>Add</button>
-        </>
-      ) : (
-        <button onClick={() => setShowQuantityInput(true)}>Add to Cart</button>
-      )}
-      <button onClick={handleRemoveFromCart}>Remove from Cart</button>
-      {message && <p>{message}</p>}
+    <div className="max-w-4xl mx-auto p-10 bg-beige-50">
+      <div className="flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-8">
+        <img src={item.imageUrl} alt={item.name} className="w-full md:w-1/2 rounded-lg shadow-md" />
+        <div className="mt-4 md:mt-0">
+          <h1 className="text-2xl font-bold text-brown-600 mb-2">{item.name}</h1>
+          <p className="text-lg text-brown-500 mb-2">Rs{item.price.toFixed(2)}</p>
+          <p className="mt-2 text-gray-700 mb-4">{item.description}</p>
+          {showQuantityInput ? (
+            <div className="mt-4 flex items-center space-x-4">
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                min="1"
+                className="border rounded p-2 w-16"
+              />
+              <button onClick={handleAddToCart} className="bg-brown-500 text-white py-2 px-4 rounded">
+                Add
+              </button>
+            </div>
+          ) : (
+            <button onClick={() => setShowQuantityInput(true)} className="mt-4 bg-brown-500 text-white py-2 px-4 rounded">
+              Add to Cart
+            </button>
+          )}
+          <div className="mt-4 flex space-x-4">
+            <button onClick={handleRemoveFromCart} className="bg-brown-500 text-white py-2 px-4 rounded">
+              Remove from Cart
+            </button>
+          </div>
+          {message && <p className="mt-4 text-green-500">{message}</p>}
+        </div>
+      </div>
     </div>
   );
 }
