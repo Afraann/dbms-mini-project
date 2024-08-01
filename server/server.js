@@ -7,6 +7,7 @@ const protectedRoutes = require('./routes/protected');
 const itemRoutes = require('./routes/items');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order'); 
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use('/api/protected', protectedRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/order', orderRoutes); // Add this line
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
