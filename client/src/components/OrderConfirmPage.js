@@ -11,6 +11,7 @@ function OrderConfirmPage() {
   const [discountedPrice, setDiscountedPrice] = useState(0);
   const [message, setMessage] = useState('');
   const [showDiscountedPrice, setShowDiscountedPrice] = useState(false);
+  const [deliveryAddress, setDeliveryAddress] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,25 +41,47 @@ function OrderConfirmPage() {
     if (couponCode === 'DBMS50') {
       setDiscountedPrice(totalPrice * 0.5);
       setMessage('Coupon Code Applied');
-      setShowDiscountedPrice(true); 
+      setShowDiscountedPrice(true); // Show only if code is valid
     } else {
-      setDiscountedPrice(totalPrice);
+      setDiscountedPrice(totalPrice); // Reset if invalid
       setMessage('Invalid Coupon Code');
       setShowDiscountedPrice(false); 
     }
   };
 
   const handlePlaceOrder = async () => {
-    // For now, we're just redirecting and showing the popup
-    // In your final implementation, replace this with your actual order placement logic
-    Swal.fire({
-      icon: 'success',
-      title: 'Order Placed Successfully!',
-      text: 'Your order has been placed. You can track its progress on the order tracking page.'
-    }).then(() => {
-      navigate('/track-order'); 
-    });
-  };
+    try {
+      const token = localStorage.getItem('token');
+      const orderDetails = {
+        items: cart.items,
+        totalPrice,
+        discountedPrice,
+        couponCode,
+        deliveryAddress,
+      };
+  
+      const response = await axios.post('http://localhost:5000/api/order/create', orderDetails, {
+        headers: { 'x-auth-token': token },
+      });
+  
+      if (response.status === 201) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Order Placed Successfully!',
+          text: 'Your order has been placed. You can track its progress on the order tracking page.'
+        }).then(() => {
+          navigate('/track-order');
+        });
+      }
+    } catch (error) {
+      console.error('Error placing order:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Order Failed',
+        text: 'Something went wrong. Please try again.'
+      });
+    }
+  };  
 
   if (!cart) {
     return <div>Loading...</div>;
@@ -94,6 +117,16 @@ function OrderConfirmPage() {
             <button onClick={handleApplyCoupon}>Apply Coupon</button>
           </div>
           {message && <p>{message}</p>}
+
+          <div>
+            <label>Delivery Address:</label>
+            <input
+              type="text"
+              value={deliveryAddress}
+              onChange={(e) => setDeliveryAddress(e.target.value)}
+            />
+          </div>
+
           <button onClick={handlePlaceOrder}>Place Order</button>
         </div>
       )}

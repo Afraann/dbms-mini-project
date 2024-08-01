@@ -1,47 +1,39 @@
-// routes/orders.js
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
 const Order = require('../models/Order');
-const Cart = require('../models/Cart');
+const auth = require('../middleware/auth');
 
-router.post('/place', auth, async (req, res) => {
-  const { address, couponCode } = req.body;
+// Create new order
+router.post('/create', auth, async (req, res) => {
+  const { items, totalPrice, discountedPrice, couponCode, deliveryAddress } = req.body;
 
   try {
-    const cart = await Cart.findOne({ userId: req.user._id }).populate('items.itemId');
-    if (!cart) return res.status(400).send('Cart not found');
-
-    let totalPrice = cart.items.reduce((sum, item) => sum + item.itemId.price * item.quantity, 0);
-    if (couponCode === 'DBMS50') {
-      totalPrice *= 0.5;
-    }
-
-    const order = new Order({
+    const newOrder = new Order({
       userId: req.user._id,
-      items: cart.items,
-      address,
-      couponCode,
+      items,
       totalPrice,
+      discountedPrice,
+      couponCode,
+      deliveryAddress,
     });
 
-    await order.save();
-    await Cart.findByIdAndDelete(cart._id);
+    const savedOrder = await newOrder.save();
 
-    res.json({ message: 'Order placed successfully', order });
+    res.status(201).send(savedOrder);
   } catch (error) {
-    console.error('Error placing order:', error);
-    res.status(500).send('Server error');
+    console.error('Error creating order:', error);
+    res.status(500).send('Something went wrong');
   }
 });
 
-router.get('/admin', auth, async (req, res) => {
+// Get orders for user
+router.get('/', auth, async (req, res) => {
   try {
-    const orders = await Order.find().populate('userId items.itemId');
-    res.json(orders);
+    const orders = await Order.find({ userId: req.user._id }).populate('items.itemId');
+    res.status(200).send(orders);
   } catch (error) {
     console.error('Error fetching orders:', error);
-    res.status(500).send('Server error');
+    res.status(500).send('Something went wrong');
   }
 });
 

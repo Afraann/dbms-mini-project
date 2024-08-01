@@ -1,0 +1,33 @@
+/* src/styles/AccountPage.css */
+  main {
+    max-width: 500px;  /* Slightly narrower for a focused feel */
+    margin: 40px auto; /* More vertical space to breathe */
+    padding: 30px;
+    border-radius: 8px; /* Softer corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }  
+
+
+  h2 {
+    font-size: 1.8rem;  /* Slightly larger for hierarchy */
+    font-weight: 500;  /* Less bold, more modern */
+    margin-bottom: 25px; /* More space below the heading */
+    color: #333; 
+  }
+  
+  p {
+    display: flex; /* Use flexbox for layout */
+    align-items: baseline; /* Vertically align to text baseline */
+    margin-bottom: 15px; /* Consistent spacing between details */
+  }
+  
+  strong {
+    min-width: 120px; /* Ensure labels have consistent width */
+    margin-right: 15px; 
+    color: #555;       /* Slightly darker gray for labels */
+  }
+  
+  span {
+    color: #222; /* Darker text for values */
+  }
+  

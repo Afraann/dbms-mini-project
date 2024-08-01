@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode'; // Update the import statement
+import '../styles/AccountPage.css'; // Import the stylesheet
+
 
 function AccountPage() {
   const [userDetails, setUserDetails] = useState({});
@@ -25,7 +27,7 @@ function AccountPage() {
   }, []);
 
   return (
-    <div>
+    <div class = 'main'>
       <h2>Account Details</h2>
       <p><strong>Username:</strong> {userDetails.username}</p>
       <p><strong>Phone:</strong> {userDetails.phone}</p>

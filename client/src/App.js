@@ -10,6 +10,7 @@ import CartPage from './components/CartPage';
 import ItemPage from './components/ItemPage';
 import Layout from './components/Layout';
 import OrderConfirmPage from './components/OrderConfirmPage'; // Add this line
+import TrackOrderPage from './components/TrackOrderPage';
 
 // A component to conditionally wrap routes with Layout
 function LayoutWrapper({ children }) {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/item/:id" element={<ItemPage />} />
           <Route path="/order-confirm" element={<OrderConfirmPage />} />
+          <Route path="/track-order" element={<TrackOrderPage />} />
         </Routes>
       </LayoutWrapper>
     </Router>
